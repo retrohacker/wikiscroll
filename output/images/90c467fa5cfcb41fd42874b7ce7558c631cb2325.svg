@@ -1,0 +1,23 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.162ex" height="3.176ex" style="vertical-align: -1.005ex; margin-right: -0.125ex;" viewBox="0 -934.9 500.5 1367.4" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
+<title id="MathJax-SVG-1-Title">{\displaystyle {\mathsf {S}}\!\!\!{{\big |}\!{\big |}}}</title>
+<defs aria-hidden="true">
+<path stroke-width="1" id="E1-MJSS-53" d="M55 514Q55 589 115 652T283 716Q315 716 345 711T396 699T432 685T457 672T467 667Q467 666 459 618T449 568Q383 634 282 634Q214 634 182 600T150 525Q150 507 155 492T172 465T194 446T222 432T247 423T272 416T289 412Q353 396 378 384Q432 358 466 307T500 194Q500 110 438 44T272 -22Q215 -22 159 -5T73 28T44 50Q45 51 49 75T57 122T62 146L65 143Q68 140 74 136T88 125T107 111T131 98T160 85T194 74T232 66T274 63H286Q327 63 366 96T406 182Q406 245 352 280Q329 296 265 310T173 339Q124 363 90 409T55 514Z"></path>
+<path stroke-width="1" id="E1-MJMAIN-7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path>
+<path stroke-width="1" id="E1-MJMAIN-2223" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#E1-MJSS-53" x="0" y="0"></use>
+<g transform="translate(56,0)">
+<g transform="translate(0,850)">
+ <use xlink:href="#E1-MJMAIN-2223" x="0" y="-751"></use>
+ <use xlink:href="#E1-MJMAIN-2223" x="0" y="-950"></use>
+</g>
+<g transform="translate(111,0)">
+<g transform="translate(0,850)">
+ <use xlink:href="#E1-MJMAIN-2223" x="0" y="-751"></use>
+ <use xlink:href="#E1-MJMAIN-2223" x="0" y="-950"></use>
+</g>
+</g>
+</g>
+</g>
+</svg>

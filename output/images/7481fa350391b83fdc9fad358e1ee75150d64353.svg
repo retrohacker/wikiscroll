@@ -1,0 +1,18 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="6.424ex" height="3.343ex" style="vertical-align: -0.338ex;" viewBox="0 -1293.7 2766 1439.2" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" aria-labelledby="MathJax-SVG-1-Title">
+<title id="MathJax-SVG-1-Title">{\displaystyle {\mathsf {P{\overset {?}{=}}NP}}}</title>
+<defs aria-hidden="true">
+<path stroke-width="1" id="E1-MJSS-50" d="M88 0V694H230Q347 693 370 692T410 686Q487 667 535 611T583 485Q583 409 527 348T379 276Q369 274 279 274H192V0H88ZM486 485Q486 523 471 551T432 593T391 612T357 621Q350 622 268 623H189V347H268Q350 348 357 349Q370 351 383 354T416 368T450 391T475 429T486 485Z"></path>
+<path stroke-width="1" id="E1-MJSS-3D" d="M56 350Q56 363 70 370H707Q722 362 722 350Q722 339 708 331L390 330H72Q56 335 56 350ZM56 150Q56 165 72 170H708Q722 160 722 150Q722 138 707 130H70Q56 137 56 150Z"></path>
+<path stroke-width="1" id="E1-MJSS-3F" d="M55 652Q63 658 77 666T132 689T214 704T265 703Q303 698 332 684T376 653T401 615T413 578T416 546Q416 475 360 426Q325 396 303 365T273 303T263 256T261 216V186H183V225Q184 281 194 322Q206 368 232 409T276 469T306 495Q323 517 323 550Q323 596 297 612T223 629Q187 629 157 618Q122 607 91 583L83 576L55 652ZM173 0V98H271V0H173Z"></path>
+<path stroke-width="1" id="E1-MJSS-4E" d="M88 0V694H235L252 659Q261 639 364 428T526 84V694H619V0H472L455 35Q453 39 330 294T185 601L181 611V0H88Z"></path>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)" aria-hidden="true">
+ <use xlink:href="#E1-MJSS-50" x="0" y="0"></use>
+<g transform="translate(639,0)">
+ <use xlink:href="#E1-MJSS-3D" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E1-MJSS-3F" x="314" y="807"></use>
+</g>
+ <use xlink:href="#E1-MJSS-4E" x="1418" y="0"></use>
+ <use xlink:href="#E1-MJSS-50" x="2126" y="0"></use>
+</g>
+</svg>
