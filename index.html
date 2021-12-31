@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        max-width: 1000px;
+        margin: auto;
+      }
+      #pageTitle {
+        font-family: "Linux Libertine", "Georgia", "Times", serif;
+        text-align: center;
+      }
+      #pageSubtitle {
+        font-family: "sans-serif";
+        text-align: center;
+      }
+      .card {
+        display: flex;
+        border: 1px solid rgb(162, 169, 177);
+        border-spacing: 3px;
+        background-color: rgb(248, 249, 250);
+        padding: 1em;
+        margin: 1em;
+        align-items: center;
+      }
+      .image-container {
+        height: 150px;
+        flex-basis: 150px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        margin: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .image-container > img {
+        max-height: 150px;
+        max-width: 150px;
+      }
+      .card > div > h1 {
+        font-family: "Linux Libertine", "Georgia", "Times", serif;
+        font-size: 1em;
+      }
+      .card > div > p {
+        font-size: .875em;
+        line-height: 1.6;
+        color: rgb(32, 33, 34);
+        font-family: "sans-serif";
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="pageTitle">WikiScroll</h1>
+    <h3 id="pageSubtitle">Infinitely Scroll Wikipedia</h3>
+    <div id='content'>
+    </div>
+    <script>
+      const content = document.getElementById('content');
+      const ts = (new Date()).getTime();
+      let count
+
+      function request(method, url, cb) {
+        const req = new XMLHttpRequest();
+        function onFailure() {
+          setTimeout(request, 250, method, url, cb)
+        }
+        function onResponse() {
+          if (((this.status / 100) | 0) !== 2) {
+            return onFailure()
+          }
+          try {
+            return cb(null, JSON.parse(this.responseText))
+          } catch(e) {
+            return cb(e)
+          }
+        }
+        req.addEventListener('load', onResponse);
+        req.addEventListener('error', onFailure);
+        req.open(method, url + ((/\?/).test(url) ? "&" : "?") + ts);
+        req.send();
+      }
+
+      function fetchEntry(i, cb) {
+        request('GET', './output/articles/' + i + '.json', cb)
+      }
+
+      function addCard(entry) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'card';
+        const imageContainer = document.createElement('div');
+        imageContainer.className = 'image-container';
+        const image = document.createElement('img');
+        image.src = './output/images/' + encodeURIComponent(entry.image);
+        imageContainer.appendChild(image);
+        wrapper.appendChild(imageContainer);
+        const text = document.createElement('div');
+        const title = document.createElement('h1');
+        title.innerText = entry.title;
+        text.appendChild(title);
+        const summary = document.createElement('p');
+        summary.innerText = entry.summary;
+        text.appendChild(summary);
+        wrapper.appendChild(text);
+        content.appendChild(wrapper);
+      }
+
+      function fetchCount(cb) {
+        request('GET', './output/00_index_count.txt', cb);
+      }
+
+      function pick() {
+        return Math.floor(Math.random() * (count + 1));
+      }
+
+      fetchCount(function (err, c) {
+        count = c
+        for (let i = 0; i < 25; i++) {
+          fetchEntry(pick(), function haveEntry(err, content) {
+            addCard(content)
+          })
+        }
+      });
+    </script>
+  </body>
+</html>
