@@ -13,21 +13,28 @@ const parseFile = async file => {
         let summary = ''
         let paragraphs = $('#mf-section-0 > p')
         for (let i = 0; i < paragraphs.length; i++) {
-            summary = $(paragraphs.get(i)).text().trim()
+            summary = $(paragraphs.get(i)).text().trim().replace(/(\s*\n\s*)+/g, ' ')
             if (summary !== '') {
                 break
             }
         }
         let image = ''
         try {
+          const ignore = [
+            'OOjs_UI_icon_table-merge-cells.svg.png.webp',
+            'Loudspeaker.svg.png.webp',
+            'OOjs_UI_icon_edit-ltr-progressive.svg.png.webp'
+          ]
+          while (image === '' || ignore.indexOf(image) !== -1) {
             image = decodeURIComponent(path.basename($('img').first().attr('src') || '').trim())
-            await fs.access(path.join(IMAGES, image))
+          }
+          await fs.access(path.join(IMAGES, image))
         } catch(e) {
             console.error(`Image ${image} missing`)
             image = ''
         }
         return {
-            title, summary, image
+            title, summary, image, url: file
         }
 }
 
