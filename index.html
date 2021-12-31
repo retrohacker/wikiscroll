@@ -57,22 +57,25 @@
     <script>
       const content = document.getElementById('content');
       const ts = (new Date()).getTime();
-      let count
+      let fetching = false;
+      let count;
 
       function request(method, url, cb) {
         const req = new XMLHttpRequest();
         function onFailure() {
-          setTimeout(request, 250, method, url, cb)
+          setTimeout(request, 250, method, url, cb);
         }
         function onResponse() {
           if (((this.status / 100) | 0) !== 2) {
-            return onFailure()
+            return onFailure();
           }
+          let json;
           try {
-            return cb(null, JSON.parse(this.responseText))
+            json = JSON.parse(this.responseText);
           } catch(e) {
-            return cb(e)
+            return cb(e);
           }
+          return cb(null, JSON.parse(this.responseText));
         }
         req.addEventListener('load', onResponse);
         req.addEventListener('error', onFailure);
@@ -81,7 +84,7 @@
       }
 
       function fetchEntry(i, cb) {
-        request('GET', './output/articles/' + i + '.json', cb)
+        request('GET', './output/articles/' + i + '.json', cb);
       }
 
       function addCard(entry) {
@@ -112,13 +115,54 @@
         return Math.floor(Math.random() * (count + 1));
       }
 
-      fetchCount(function (err, c) {
-        count = c
-        for (let i = 0; i < 25; i++) {
+
+      function fetchBatch(size, cb) {
+        if (fetching) {
+          return;
+        }
+        fetching = true;
+        let fetched = 0;
+        for (let i = 0; i < size; i++) {
           fetchEntry(pick(), function haveEntry(err, content) {
-            addCard(content)
+            addCard(content);
+            if (++fetched === size - 1) {
+              fetching = false;
+              cb();
+            }
           })
         }
+      }
+
+      function registerScroll() {
+        let lastKnownScrollPosition = 0;
+        let waiting = false;
+
+        function pullMaybe(scrollPos) {
+          const pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+          if ((pageHeight - 1000) <= scrollPos + window.innerHeight) {
+            fetchBatch(25, function noop() {})
+          }
+        }
+
+        document.addEventListener('scroll', function(e) {
+          lastKnownScrollPosition = window.pageYOffset;
+
+          if (!waiting) {
+            window.requestAnimationFrame(function() {
+              pullMaybe(lastKnownScrollPosition);
+              waiting = false;
+            });
+
+            waiting = true;
+          }
+        });
+      }
+
+      fetchCount(function (err, c) {
+        count = c
+        fetchBatch(25, function () {
+            registerScroll()
+        })
       });
     </script>
   </body>
