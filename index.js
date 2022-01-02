@@ -5,6 +5,7 @@ const async = require('async')
 const INPUT = './temp/A'
 const IMAGES = './temp/I'
 const OUTPUT = './output'
+const stripNewlines = /(\s*\n\s*)+/g
 
 const parseFile = async file => {
         const body = await fs.readFile(path.join(INPUT, file))
@@ -13,7 +14,7 @@ const parseFile = async file => {
         let summary = ''
         let paragraphs = $('#mf-section-0 > p')
         for (let i = 0; i < paragraphs.length; i++) {
-            summary = $(paragraphs.get(i)).text().trim().replace(/(\s*\n\s*)+/g, ' ')
+            summary = $(paragraphs.get(i)).text().trim().replace(stripNewlines, ' ')
             if (summary !== '') {
                 break
             }
@@ -25,12 +26,16 @@ const parseFile = async file => {
             'Loudspeaker.svg.png.webp',
             'OOjs_UI_icon_edit-ltr-progressive.svg.png.webp'
           ]
-          while (image === '' || ignore.indexOf(image) !== -1) {
-            image = decodeURIComponent(path.basename($('img').first().attr('src') || '').trim())
+          const images = $('img')
+          for (let i = 0; i < images.length; i++) {
+            image = decodeURIComponent(path.basename(images.get(i).attribs['src'] || '').trim())
+            if (image !== '' && ignore.indexOf(image) === -1) {
+              break
+            }
           }
-          await fs.access(path.join(IMAGES, image))
+          await fs.access(path.join(IMAGES, image || ''))
         } catch(e) {
-            console.error(`Image ${image} missing`)
+            console.error(`Image ${image} missing for ${file}`)
             image = ''
         }
         return {
@@ -54,8 +59,15 @@ const writeEntry= async (content, index) => {
 
 const main = async () => {
     const files = await fs.readdir(INPUT)
-    const content = (await async.mapLimit(files, 15, parseFile))
-        .filter(v => v.image !== '' && v.title !== '' && v.summary !== '')
+    let i = 0;
+    const content = (await async.mapLimit(files, 15, async (content, index) => {
+            const result = await parseFile(content, index);
+            if (++i % 100 === 0) {
+                console.log(`Processed: ${i} / ${files.length}`)
+            }
+            return result
+        }))
+        .filter(v => v.image !== '' && v.title !== '' && v.summary !== '' && v.url !== '')
     await fs.writeFile(path.join(OUTPUT, '00_index_count.txt'), content.length.toString())
     await async.eachOfLimit(content, 15, writeEntry)
     console.log(content.length)
