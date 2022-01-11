@@ -58,7 +58,6 @@
     </div>
     <script>
       const content = document.getElementById('content');
-      const ts = (new Date()).getTime();
       let fetching = false;
       let count;
 
@@ -81,7 +80,7 @@
         }
         req.addEventListener('load', onResponse);
         req.addEventListener('error', onFailure);
-        req.open(method, url + ((/\?/).test(url) ? "&" : "?") + ts);
+        req.open(method, url);
         req.send();
       }
 
