@@ -83,8 +83,6 @@
         req.open(method, url);
         req.send();
       }
-      
-      request('GET', 'https://wikiscroll.blankenship.io', function () {});
 
       function fetchEntry(i, cb) {
         request('GET', './output/articles/' + i + '.json', cb);
@@ -118,7 +116,6 @@
       function pick() {
         return Math.floor(Math.random() * (count + 1));
       }
-
 
       function fetchBatch(size, cb) {
         if (fetching) {
@@ -165,7 +162,8 @@
       fetchCount(function (err, c) {
         count = c
         fetchBatch(25, function () {
-            registerScroll()
+            request('GET', 'https://wikiscroll.blankenship.io', function () {});
+            registerScroll();
         })
       });
     </script>
