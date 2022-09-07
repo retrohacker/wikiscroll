@@ -162,7 +162,6 @@
       fetchCount(function (err, c) {
         count = c
         fetchBatch(25, function () {
-            request('GET', 'https://wikiscroll.blankenship.io', function () {});
             registerScroll();
         })
       });
